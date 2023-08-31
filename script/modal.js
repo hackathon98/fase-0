@@ -50,6 +50,11 @@ const modalBox = (message, isModal = true) => {
             modal.removeChild(modal.firstChild)
         }
 
+        styleSetter({
+            minHeight: "0",
+            minWidth: "0",
+        }, modal.style)
+
         modal.close()
     })
 

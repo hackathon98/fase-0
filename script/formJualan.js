@@ -1,7 +1,5 @@
 import { products, users } from "./database.js"
 
-const formContainer = document.getElementById("jual-form-container")
-
 const userInput = {
     product: "",
     type: "",
@@ -14,6 +12,7 @@ const showForm = () => {
     const closeBtn = document.getElementById("close-dialog")
     const selectProduct = document.getElementById("product")
     const radioInputs = document.querySelectorAll('input[type="radio"][name="condition"]')
+    const submitBtn = document.getElementById("submit-btn")
 
     radioInputs.forEach((input) => {
         input.addEventListener('change', (e) => {
@@ -65,11 +64,43 @@ const showForm = () => {
             
             option.addEventListener("click", (e) => {
                 const { value } = e.target
-                console.log(value)
+                userInput.type = value
             })
         }
         
         selectInput.appendChild(selectTag)
+
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault()
+
+            const {product, category, type} = userInput
+
+            if(!product || !category || !type) return
+
+            const multiplier = {
+                perfect: 0.9,
+                good: 0.6,
+                bad: 0.4,
+            }
+
+            const [ filtered ] = products[product].filter(phone => phone.type === type)
+
+            
+            const addedItem = {
+                ...filtered,
+                condition: category,
+                price : filtered.price * multiplier[category]
+            }
+            
+            if(!localStorage.getItem("newProducts")) localStorage.setItem("newProducts", JSON.stringify([addedItem]))
+            else {   
+                const parsed = JSON.parse(localStorage.getItem("newProducts"))
+                parsed.push(addedItem)
+                localStorage.setItem("newProducts", JSON.stringify(parsed))
+            }
+
+            location.reload()
+        })
     })
 }
 
