@@ -1,4 +1,5 @@
 import { users } from "./database.js"
+import modalBox from "./modal.js"
 
 const userAuth = () => {
     const signupBtn = document.getElementById("signup-btn")
@@ -32,16 +33,13 @@ const userAuth = () => {
                 if(user.password === input.password) {
                     localStorage.setItem("auth", user.id)
                     location.reload()
-                    // window.location("index.html")
                     return
                 }
-                // messageModal("Password is incorrect")
-                alert("Password is incorrect")
+                modalBox("Password is incorrect")
                 return
             }
         }
-        // messageModal("Username is incorrect")
-        alert("Username is incorrect")
+        modalBox("Username is incorrect")
     })
     
     signupBtn.addEventListener("click", (e) => {
@@ -49,8 +47,7 @@ const userAuth = () => {
     
         for(let user of users) {
             if(user.username === input.username) {
-                alert("User name is already being used")
-                // messageModal("User name is already being used")
+                modalBox("User name is already being used")
                 return
             }
         }
@@ -62,9 +59,6 @@ const userAuth = () => {
             fullName: "",
         }
     
-        // users.push(
-        //     newUser
-        // )
 
         if(localStorage.getItem("newUser")) {
             const parsed = JSON.parse(localStorage.getItem("newUser"))
@@ -77,7 +71,6 @@ const userAuth = () => {
         localStorage.setItem("auth", newUser.id)
 
         location.reload()
-        // window.location("index.html")
         return
     })
     
@@ -85,9 +78,6 @@ const userAuth = () => {
         e.preventDefault()
         localStorage.removeItem("auth")
         location.reload()
-
-        // window.location("sign-in.html")
-
     })
 }
 
