@@ -1,5 +1,6 @@
 import { userSignOut } from "./login.js"
-import { users } from "./database.js";
+import { users } from "./database.js"
+import appendProducts from "./displayProduct.js"
 
 const currLoggedId = localStorage.getItem("auth")
 const newUsers = localStorage.getItem("newUser")
@@ -17,4 +18,5 @@ const userInfo = document.getElementById("user-info")
 userInfo.innerText = `Halo, ${loggedUser.fullName ? loggedUser.fullName : "Pengguna Baru"}`
 
 userSignOut()
+appendProducts()
 
