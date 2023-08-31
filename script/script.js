@@ -1,4 +1,4 @@
-import userAuth from "./login.js";
+import { userAuth } from "./login.js";
 import { users } from "./database.js";
 
 if(localStorage.getItem("auth")) {

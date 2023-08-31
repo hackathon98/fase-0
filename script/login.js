@@ -4,7 +4,6 @@ import modalBox from "./modal.js"
 const userAuth = () => {
     const signupBtn = document.getElementById("signup-btn")
     const loginBtn = document.getElementById("login-btn")
-    const signoutBtn = document.getElementById("signout-btn")
     const usernameInput = document.querySelector(".form-floating #floatingInput")
     const passwordInput = document.querySelector(".form-floating #floatingPassword")
     
@@ -74,13 +73,20 @@ const userAuth = () => {
         return
     })
     
+    
+}
+
+const userSignOut = () => {
+    const signoutBtn = document.getElementById("signout-btn")
+
     signoutBtn.addEventListener("click", (e) => {
         e.preventDefault()
+        console.log("masuk")
         localStorage.removeItem("auth")
         location.reload()
     })
 }
 
-export default userAuth
+export { userAuth, userSignOut }
 
 
