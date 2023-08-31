@@ -5,18 +5,19 @@ import showForm from "./formJualan.js"
 
 const currLoggedId = localStorage.getItem("auth")
 const newUsers = localStorage.getItem("newUser")
+const [ loggedUser ] = users.filter(user => user.id === +currLoggedId)
+console.log(loggedUser)
 
-if(!currLoggedId) window.location.replace("sign-in.html")
+if(!currLoggedId && loggedUser) window.location.replace("sign-in.html")
 
 if(newUsers) {
     const parsed= JSON.parse(newUsers)
     users.push(...parsed)
 }
 
-const [ loggedUser ] = users.filter(user => user.id === +currLoggedId)
 
 const userInfo = document.getElementById("user-info")
-userInfo.innerText = `Halo, ${loggedUser.fullName ? loggedUser.fullName : "Pengguna Baru"}`
+userInfo.innerText = `Halo, ${loggedUser?.fullName ? loggedUser.fullName : "Pengguna Baru"}`
 
 showForm()
 
