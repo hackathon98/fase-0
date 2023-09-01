@@ -43,6 +43,10 @@ const userAuth = () => {
     
     signupBtn.addEventListener("click", (e) => {
         e.preventDefault()
+        if(input.username.length === 0 || input.password.length === 0) {
+            modalBox("Both fields must be filled")
+            return
+        }
     
         for(let user of users) {
             if(user.username === input.username) {
