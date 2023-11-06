@@ -1,13 +1,4 @@
-const styleSetter = (styles, el) => {
-    for(let prop in styles) {
-        for(let style in el) {
-            if(prop === style) {
-                el[style] = styles[prop]
-                break
-            }
-        }
-    }
-}
+import { styleSetter } from "./utils.js"
 
 const modalBox = (message, isModal = true) => {
     if(!message || typeof message !== "string") return
@@ -58,7 +49,8 @@ const modalBox = (message, isModal = true) => {
         modal.close()
     })
 
-    modal.showModal()
+    if(isModal) modal.showModal()
+    else modal.show()
 }
 
 export default modalBox

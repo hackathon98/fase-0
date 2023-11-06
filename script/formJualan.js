@@ -1,4 +1,4 @@
-import { products, users } from "./database.js"
+import { products } from "./database.js"
 
 const userInput = {
     product: "",
@@ -24,7 +24,7 @@ const showForm = () => {
         })
     })
 
-    for(let name in products) {
+    for (let name in products) {
         const option = document.createElement("option")
         option.setAttribute("value", name)
         name = name.split("-").join(" ")
@@ -34,14 +34,14 @@ const showForm = () => {
         selectProduct.appendChild(option)
     }
 
-    
+
     formBtn.addEventListener("click", () => {
         formDialog.showModal()
     })
     closeBtn.addEventListener("click", () => {
         formDialog.close()
     })
-    
+
     selectProduct.addEventListener("change", (e) => {
         const { value } = e.target
         const selectTag = document.createElement("select")
@@ -52,30 +52,30 @@ const showForm = () => {
 
         userInput.product = value
 
-        while(selectInput.children[2]) {
+        while (selectInput.children[2]) {
             selectInput.removeChild(selectInput.children[2])
         }
-        
-        for(let phone of products[value]) {
+
+        for (let phone of products[value]) {
             const option = document.createElement("option")
             option.innerText = phone.name
             option.setAttribute("value", phone.type)
             selectTag.appendChild(option)
-            
+
             option.addEventListener("click", (e) => {
                 const { value } = e.target
                 userInput.type = value
             })
         }
-        
+
         selectInput.appendChild(selectTag)
 
         submitBtn.addEventListener("click", (e) => {
             e.preventDefault()
 
-            const {product, category, type} = userInput
+            const { product, category, type } = userInput
 
-            if(!product || !category || !type) return
+            if (!product || !category || !type) return
 
             const multiplier = {
                 perfect: 0.9,
@@ -83,17 +83,17 @@ const showForm = () => {
                 bad: 0.4,
             }
 
-            const [ filtered ] = products[product].filter(phone => phone.type === type)
+            const [filtered] = products[product].filter(phone => phone.type === type)
 
-            
+
             const addedItem = {
                 ...filtered,
                 condition: category,
-                price : filtered.price * multiplier[category]
+                price: filtered.price * multiplier[category]
             }
-            
-            if(!localStorage.getItem("newProducts")) localStorage.setItem("newProducts", JSON.stringify([addedItem]))
-            else {   
+
+            if (!localStorage.getItem("newProducts")) localStorage.setItem("newProducts", JSON.stringify([addedItem]))
+            else {
                 const parsed = JSON.parse(localStorage.getItem("newProducts"))
                 parsed.push(addedItem)
                 localStorage.setItem("newProducts", JSON.stringify(parsed))
